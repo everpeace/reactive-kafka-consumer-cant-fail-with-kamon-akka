@@ -30,6 +30,15 @@ I faced an issue that if [Kamon](https://kamon.io/) is enabled, more precisely, 
     - you will see stream never fail, but you will only see KafkaConsumerActor stopped, stream will be still running until some signal(Ctrl-C or similar) was received.
     - refer to [appendix](#with_kamon) for detailed log
 
+# Attaching Debugger to the container
+the container image(`reactive-kafka-cant-stop-with-kamon-akka:0.1.0-SNAPSHOT`) exposes 4000 to remote debugging.  So you can run the container with `$DEBUG=true` like below:
+
+```
+docker run -e KAMON=yes -e DEBUG=true -p 4000:4000 reactive-kafka-cant-stop-with-kamon-akka:0.1.0-SNAPSHOT
+```
+
+then you can attach remote debugger `locahost:4000`.
+
 
 # Appendix: Logs
 

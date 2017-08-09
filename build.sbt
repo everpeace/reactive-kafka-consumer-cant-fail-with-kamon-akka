@@ -22,5 +22,8 @@ lazy val root = (project in file(".")).
     ),
     // docker container settings
     dockerBaseImage := "frolvlad/alpine-oraclejdk8:8.131.11-cleaned", // glibc based alpine for kamon
-    bashScriptExtraDefines += s"""if [ -z $${KAMON} ] || [ $${KAMON} = "true" ] || [ $${KAMON} = "yes" ]; then addJava "-javaagent:$${lib_dir}/org.aspectj.aspectjweaver-1.8.10.jar"; fi"""
+    bashScriptExtraDefines += """set -x""",
+    bashScriptExtraDefines += """if [ -z ${KAMON} ] || [ ${KAMON} = "true" ] || [ ${KAMON} = "yes" ]; then addJava "-javaagent:${lib_dir}/org.aspectj.aspectjweaver-1.8.10.jar"; fi""",
+    bashScriptExtraDefines += """if [ -n ${DEBUG} ]; then addJava "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=4000"; fi""",
+    dockerExposedPorts := Seq(4000)
   )
